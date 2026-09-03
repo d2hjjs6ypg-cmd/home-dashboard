@@ -17,6 +17,42 @@
 .nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:min(648px,calc(100% - 24px));background:#101217eF;border:1px solid #2a2e36;backdrop-filter:blur(20px);border-radius:24px;padding:9px 6px env(safe-area-inset-bottom);display:flex;justify-content:space-around;box-shadow:0 10px 35px #0009}.nav div{text-align:center;color:#7e848f;font-size:10px}.nav .active{color:var(--green)}.nav i{display:block;font-style:normal;font-size:22px;margin-bottom:2px}
 @media(max-width:390px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.stats{gap:13px}.stat b{font-size:16px}}
 </style>
+
+<style>
+:root{
+  --bg:#f5f7fb;--card:#ffffff;--text:#172033;--muted:#6b7280;
+  --line:#e8ebf2;--accent:#5b5ce2;--accent-soft:#eef0ff;
+  --green:#1f9d68;--green-soft:#e9f8f1;--amber:#c98518;--amber-soft:#fff6e4;
+  --shadow:0 10px 30px rgba(20,28,45,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#f8f9fc 0%,#f2f5fa 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;letter-spacing:-.01em}
+main,.container{max-width:980px;margin:0 auto;padding:22px 18px 42px}
+header{background:transparent!important;box-shadow:none!important;padding:20px 0 12px!important}
+h1{font-size:clamp(30px,7vw,48px)!important;letter-spacing:-.045em!important;margin:0 0 6px!important}
+.subtitle{color:var(--muted);font-size:15px}
+.grid,.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card,article.card{background:rgba(255,255,255,.92)!important;border:1px solid rgba(226,230,239,.9)!important;border-radius:22px!important;box-shadow:var(--shadow)!important;padding:20px!important}
+.card:hover{transform:translateY(-1px);transition:.2s ease}
+.label{display:flex!important;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px!important;color:var(--muted);font-size:13px!important;font-weight:600}
+.label strong{color:var(--text);font-size:13px}
+.school-today,.binmain{display:flex;flex-direction:column;gap:7px}
+.school-today b,.binmain b{font-size:21px;line-height:1.15}
+.school-today span,.binmain span{color:#3f4757;line-height:1.45}
+.notice{margin-top:15px!important;padding-top:13px;border-top:1px solid var(--line);color:var(--muted)!important;font-size:12px!important}
+#family-calendar{grid-column:1/-1}
+#family-events{color:#394255;line-height:1.55}
+#family-events>div{padding:10px 0!important;border-bottom:1px solid var(--line)}
+#family-events>div:last-child{border-bottom:0}
+.positive{color:var(--green)!important}
+footer{color:var(--muted);font-size:12px;padding:24px 0}
+@media(max-width:680px){
+ main,.container{padding:12px 14px 30px}
+ .grid,.cards{grid-template-columns:1fr}
+ #family-calendar{grid-column:auto}
+ .card,article.card{border-radius:18px!important;padding:17px!important}
+}
+</style>
 </head>
 <body>
 <main class="app">
@@ -25,9 +61,7 @@
 <article class="card wide solar"><div class="label"><span>☀️ SolarEdge</span><strong>● Demo data</strong></div><div class="big">3.42 <span class="unit">kW</span></div><div class="positive">Generating now</div><div class="graph"><svg viewBox="0 0 400 100" preserveAspectRatio="none"><path d="M0,94 C40,94 50,92 75,88 S100,65 125,55 S145,28 165,25 S185,12 205,18 S230,8 250,20 S275,18 290,34 S320,38 335,60 S350,85 400,94" fill="none" stroke="#72e34f" stroke-width="3"/></svg></div><div class="stats"><div class="stat"><b>18.7 kWh</b><span>Today</span></div><div class="stat"><b>2.56 kW</b><span>Export</span></div><div class="stat"><b>£1.84</b><span>Est. saved</span></div></div></article>
 <article class="card hive"><div class="label"><span>🏠 Hive</span><strong>●</strong></div><div class="temp">21.5°</div><div class="sub">Current temperature</div><div class="heat">🔥 Heating <b>OFF</b></div><div class="sub">Next: 06:30</div><div class="button">Heating OFF</div></article>
 
-<article class="card family" id="family-calendar"><div class="label"><span>📅 Family</span><strong>Upcoming</strong></div><div id="family-events">Loading family calendar…</div><div class="notice">Apple Family Calendar</div></article><article class="card school" id="school-menu"><div class="label"><span>🍽️ Cleddau Reach</span><strong>School dinners</strong></div><div class="school-today"><b>Today</b><span id="meal">Loading menu…</span></div><div class="notice">Pembrokeshire County Council · 2026 primary menu</div></article><article class="card bins"><div class="label"><span>♻️ Bins</span><strong>SA73 1AX</strong></div>
-<div class="binmain" id="bin-card"><b>Recycling</b><span>Next collection: <strong class="positive">Friday</strong></span><span>Put out by 06:30</span></div>
-<div class="notice">Pembrokeshire County Council · Recycling every Friday</div></article>
+<article class="card family" id="family-calendar"><div class="label"><span>📅 Family</span><strong>Upcoming</strong></div><div id="family-events">Loading family calendar…</div><div class="notice">Apple Family Calendar</div></article>
 <article class="card cameras"><div class="label"><span>📹 Blink</span><strong>Demo</strong></div><div class="camera-grid"><div class="cam">Front Door</div><div class="cam">Driveway</div><div class="cam">Back Garden</div><div class="cam">Side Passage</div></div><div class="button">🛡 All cameras active</div></article>
 <article class="card family"><div class="label"><span>🎒 Family</span><strong>School</strong></div><div class="child"><b>👦 Rex — P.E. kit</b><span>Every Tuesday</span></div><div class="child"><b>👧 Lola — P.E. kit</b><span>Every Monday</span></div><div class="button">+ Add family reminder</div></article>
 <article class="card wide school"><div class="label"><span>🍽️ Cleddau Reach School</span><strong>School dinners</strong></div><div class="menu-row"><span class="tag">MON</span><b>Today's menu</b><span>Menu will appear here when the current council menu feed/document is connected.</span></div><div class="menu-row"><span class="tag">TUE</span><b>Tomorrow's menu</b><span>Awaiting live Pembrokeshire County Council menu source.</span></div><div class="notice">Cleddau Reach VC Primary School · Llangwm</div></article>
@@ -84,4 +118,27 @@ try{
  box.innerHTML=up.length?up.map(e=>`<div style="display:flex;justify-content:space-between;gap:12px;margin:8px 0"><b>${e.date.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}</b><span>${e.summary}</span></div>`).join(""):"No upcoming family events";
 }catch(e){box.innerHTML="Calendar temporarily unavailable";}
 })();
-</script></body></html>
+</script>
+<script>
+(function(){
+const menu={
+1:{Mon:"Pork sausage, scrambled egg, hash browns, baked beans and peas.",Tue:"Pasta Bolognese, salad and sweetcorn",Wed:"Roast turkey with stuffing, mashed potatoes, gravy, carrots and broccoli",Thu:"Mexican chicken, rice, peas and salad",Fri:"Fish fingers, chips, baked beans and carrot sticks"},
+2:{Mon:"Pork meatballs in tomato sauce, pasta, sweetcorn and carrot sticks",Tue:"Mild chicken curry, rice, peas and sweetcorn",Wed:"Roast chicken with stuffing, mashed potatoes, gravy, carrots and broccoli",Thu:"Cottage pie, roast potato, mixed vegetables and peas",Fri:"Fish fingers, chips, baked beans and carrot sticks"},
+3:{Mon:"Hot dog, chips, ketchup, sweetcorn and coleslaw",Tue:"Chicken pasta bake, peas and salad",Wed:"Braised beef, Yorkshire pudding, mashed potatoes, gravy, carrots and broccoli",Thu:"Breaded chicken with katsu curry sauce dip, rice, mixed vegetables and peas",Fri:"Salmon fish fingers, chips, baked beans and carrot sticks"},
+4:{Mon:"Beef pasta bake, peas and sweetcorn",Tue:"Chicken wrap, chips, carrot sticks and coleslaw",Wed:"Pork sausage, mashed potatoes, gravy, carrots and broccoli",Thu:"BBQ chicken, rice, sweetcorn and peas",Fri:"Fish fingers, chips, baked beans and carrot sticks"}};
+const starts=[["2026-08-31",1],["2026-09-07",2],["2026-09-14",3],["2026-09-21",4],["2026-09-28",1],["2026-10-05",2],["2026-10-12",3],["2026-10-19",4],["2026-11-02",1],["2026-11-09",2],["2026-11-16",3],["2026-11-23",4],["2026-11-30",1],["2026-12-07",2],["2026-12-14",3]];
+const d=new Date();d.setHours(0,0,0,0);const iso=d.toISOString().slice(0,10), names=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let w=null;for(const s of starts)if(iso>=s[0])w=s[1];
+const key=names[d.getDay()];
+if(w&&menu[w][key]){document.getElementById("meal-day").textContent="Today";document.getElementById("meal").textContent=menu[w][key]}
+else{document.getElementById("meal-day").textContent="No school meal";document.getElementById("meal").textContent="No school dinner scheduled today."}
+
+const b=document.getElementById("bin-date"),t=document.getElementById("bin-type"),x=new Date(d);
+while(x.getDay()!==5)x.setDate(x.getDate()+1);
+const anchor=new Date(2026,8,18), diff=Math.round((x-anchor)/86400000);
+const black=diff>=0&&diff%21===0;
+b.textContent=x.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"});
+t.textContent=black?"Black bags (residual waste)":"Recycling";
+})();
+</script>
+</body></html>
