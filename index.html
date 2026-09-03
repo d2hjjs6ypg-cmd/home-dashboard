@@ -40,7 +40,7 @@ a{color:inherit}
 <article class="card bins" id="bin-card">
 <div class="label"><span>♻️ Bins</span><strong>Pembrokeshire</strong></div>
 <div class="binmain"><b id="bin-type">Recycling</b><span>Next collection: <strong class="positive" id="bin-date">Friday</strong></span><span>Put out by 06:30</span></div>
-<div class="notice"><a href="https://nearest.pembrokeshire.gov.uk/" target="_blank" rel="noopener" style="color:inherit">Open Pembrokeshire County Council collection calendar</a></div>
+<div class="notice">House 15 · SA73 1AX<br><a href="https://nearest.pembrokeshire.gov.uk/" target="_blank" rel="noopener" style="color:inherit">Open Pembrokeshire County Council collection calendar</a></div>
 </article><article class="card reminders" id="school-reminders">
 <div class="label"><span>🎒 School</span><strong>This week</strong></div>
 <div class="child"><b>Rex</b><span>PE kit · Tuesday</span></div>
@@ -114,17 +114,27 @@ if(chosen && chosen.days[dow]){
   document.getElementById('meal-veg').textContent='See the council menu for the current school week.';
 }
 
-/* Friday collection pattern previously established from the supplied council calendar:
-   recycling every Friday; residual black bags every third Friday. */
+/* Bin schedule for property 15, SA73 1AX, taken from the
+   Pembrokeshire County Council calendar supplied by the user.
+   Recycling: every Friday. Black Bags: 4 & 25 Sep, 16 Oct,
+   6 & 27 Nov, 18 Dec 2026. */
+const blackBagDates = new Set([
+  '2026-09-04','2026-09-25','2026-10-16',
+  '2026-11-06','2026-11-27','2026-12-18'
+]);
+
 const next=new Date(d);
 const mins=d.getHours()*60+d.getMinutes();
-if(next.getDay()===5 && mins>=390) next.setDate(next.getDate()+7);
+/* If it is Friday after the 06:30 collection deadline, move to next Friday. */
+if(next.getDay()===5 && mins>=390) next.setDate(next.getDate()+1);
 while(next.getDay()!==5) next.setDate(next.getDate()+1);
-const anchor=new Date('2026-09-25T00:00:00');
-const weeks=Math.round((next-anchor)/(7*24*60*60*1000));
-const residual=weeks>=0 && weeks%3===0;
-document.getElementById('bin-type').textContent=residual?'Recycling + Black Bags':'Recycling';
-document.getElementById('bin-date').textContent=next.toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'});
+
+const nextIso=next.toISOString().slice(0,10);
+const nextBlack=blackBagDates.has(nextIso);
+document.getElementById('bin-type').textContent =
+  nextBlack ? 'Recycling + Black Bags' : 'Recycling';
+document.getElementById('bin-date').textContent =
+  next.toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'});
 
 /* Apple Family calendar via the Cloudflare Worker already configured by you. */
 (async function(){
